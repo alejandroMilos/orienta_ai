@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Search } from 'lucide-react'
 import './Hero.css'
 
 const Hero = () => {
     const [currentWord, setCurrentWord] = useState(0)
+    const [searchValue, setSearchValue] = useState('')
     const words = ["Tus Opciones?"]
 
     useEffect(() => {
@@ -12,6 +13,19 @@ const Hero = () => {
         }, 3000)
         return () => clearInterval(interval)
     }, [words.length])
+
+    const handleSearch = (e) => {
+        e.preventDefault()
+        if (searchValue.trim()) {
+            const chatbotSection = document.getElementById('chatbot')
+            if (chatbotSection) {
+                chatbotSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                })
+            }
+        }
+    }
 
     return (
         <section className="hero">
@@ -34,15 +48,34 @@ const Hero = () => {
                     </h3>
                 </div>
 
-                <button className="cta-button pulse">
-                    Descubre más información
-                    <ChevronDown size={20} />
-                </button>
+                <form onSubmit={handleSearch} className="search-container fade-in-up">
+                    <div className="search-input-wrapper">
+                        <Search size={20} className="search-icon" />
+                        <input 
+                            type="text" 
+                            placeholder="¿Buscas más información?"
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            className="search-input"
+                        />
+                        <button type='submit' className="search-button">
+                            <ChevronDown size={20} />
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <div className="floating-shapes">
-                <div className="shape shape-1"></div>
-                <div className="shape shape-2"></div>
+            <div className="floating-images">
+                <img 
+                    src="/public/img_izq.png" 
+                    alt="Decoracion1" 
+                    className="floating-image imagen-1"
+                />
+                <img 
+                    src="/public/img_der.png" 
+                    alt="Decoracion2" 
+                    className="floating-image imagen-2"
+                />
             </div>
         </section>
     )
