@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { ChevronDown, Search } from 'lucide-react'
 import './Hero.css'
 
-const Hero = () => {
+const Hero = ({ setCurrentView, setInitialMessage }) => {
     const [currentWord, setCurrentWord] = useState(0)
     const [searchValue, setSearchValue] = useState('')
     const words = ["Tus Opciones?"]
@@ -17,13 +17,9 @@ const Hero = () => {
     const handleSearch = (e) => {
         e.preventDefault()
         if (searchValue.trim()) {
-            const chatbotSection = document.getElementById('chatbot')
-            if (chatbotSection) {
-                chatbotSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                })
-            }
+            setInitialMessage(searchValue)
+            setCurrentView('chatbot')
+            console.log("Búsqueda realizada:", searchValue)
         }
     }
 
@@ -67,12 +63,12 @@ const Hero = () => {
 
             <div className="floating-images">
                 <img 
-                    src="/public/img_izq.png" 
+                    src="/img_izq.png" 
                     alt="Decoracion1" 
                     className="floating-image imagen-1"
                 />
                 <img 
-                    src="/public/img_der.png" 
+                    src="/img_der.png" 
                     alt="Decoracion2" 
                     className="floating-image imagen-2"
                 />

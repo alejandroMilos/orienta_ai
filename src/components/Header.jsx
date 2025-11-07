@@ -1,28 +1,16 @@
-import { Menu, X, User } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import './Header.css'
 
-const Header = ({ menuOpen, setMenuOpen, activeSection, setActiveSection }) => {
-    const handleNavClick = (sectionId) => {
-        const section = document.getElementById(sectionId)
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth' })
-            setActiveSection(sectionId)
-        }
-        // Cerrar menú solo en móviles
+const Header = ({ menuOpen, setMenuOpen, currentView, setCurrentView }) => {
+    const handleNavClick = (view) => {
+        setCurrentView(view)
         if (window.innerWidth <= 768) {
             setMenuOpen(false)
         }
     }
 
     const handleLogoClick = () => {
-        const menuSection = document.getElementById('menu')
-        if (menuSection) {
-            menuSection.scrollIntoView({ behavior: 'smooth' })
-            setActiveSection('menu')
-        } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-        }
-        // Cerrar menú solo en móviles
+        setCurrentView('menu')
         if (window.innerWidth <= 768) {
             setMenuOpen(false)
         }
@@ -42,14 +30,14 @@ const Header = ({ menuOpen, setMenuOpen, activeSection, setActiveSection }) => {
                 <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
                     <a 
                         href="menu" 
-                        className={`nav-link ${activeSection === 'menu' ? 'active' : ''}`}
+                        className={`nav-link ${currentView === 'menu' ? 'active' : ''}`}
                         onClick={(e) => { e.preventDefault(); handleNavClick('menu') }}
                     >
                         menu
                     </a>
                     <a 
                         href="chatbot" 
-                        className={`nav-link ${activeSection === 'chatbot' ? 'active' : ''}`}
+                        className={`nav-link ${currentView === 'chatbot' ? 'active' : ''}`}
                         onClick={(e) => { e.preventDefault(); handleNavClick('chatbot') }}
                     >
                         chatbot
@@ -59,7 +47,7 @@ const Header = ({ menuOpen, setMenuOpen, activeSection, setActiveSection }) => {
                 <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
                     <a 
                         href="info" 
-                        className={`nav-link ${activeSection === 'info' ? 'active' : ''}`}
+                        className={`nav-link ${currentView === 'info' ? 'active' : ''}`}
                         onClick={(e) => { e.preventDefault(); handleNavClick('info') }}
                     >
                         info

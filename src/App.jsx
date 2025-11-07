@@ -1,53 +1,33 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
+import ChatbotSection from './components/ChatbotSection'
 import './App.css'
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('menu')
+  const [currentView, setCurrentView] = useState('menu')
+  const [initialMessage, setInitialMessage] = useState('')
 
-  useEffect(() => {
-    const sections = ['menu', 'info', 'chatbot']
-
-    const observers = sections.map(sectionId => {
-      const section = document.getElementById(sectionId)
-      if (!section) return null
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              setActiveSection(sectionId)
-            }
-          })
-        },
-        {
-          threshold: 0.5, // significa que estara 50% visible
-          rootMargin: '-20% 0px -20% 0px' // Asignamos un margen ajustado
-        }
-      )
-
-      observer.observe(section)
-      return observer
-    })
-
-    return () => {
-      observers.forEach(observer => observer && observer.disconnect())
+  const handleViewChange = (view) => {
+    setCurrentView(view)
+    // Reiniciamos mensaje inicial al cambiar de vista
+    if (view === 'menu') {
+      setInitialMessage('')
     }
-  }, [])
+  }
 
   return (
     <div className="app">
       <Header 
         menuOpen={menuOpen} 
         setMenuOpen={setMenuOpen} 
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
+        currentView={currentView}
+        setCurrentView={setCurrentView}
       />
-      <section id='menu'>
-        <Hero />
-      </section>   
+      
+      {currentView === 'menu' && <Hero setCurrentView={handleViewChange} setInitialMessage={setInitialMessage} /> }
+      {currentView === 'chatbot' && <ChatbotSection initialMessage={initialMessage} setInitialMessage={setInitialMessage} /> }
     </div>
   )
 }
