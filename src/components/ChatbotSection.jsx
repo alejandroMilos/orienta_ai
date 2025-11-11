@@ -13,6 +13,7 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
     ])
 
     const [inputValue, setInputValue] = useState('')
+    const [isTyping, setIsTyping] = useState(false)
     const messagesEndRef = useRef(null)
     const hasInitialMessage = useRef(false)
 
@@ -30,7 +31,10 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
 
             setMessages(prev => [...prev, userMessage])
 
+            // agregamos delay con animación "typing" ...
+            setIsTyping(true)
             setTimeout(() => {
+                setIsTyping(false)
                 const botMessage = {
                     id: Date.now() + 1,
                     text: `Recibí tu petición sobre "${initialMessage}". Exploremos juntos las opciones relacionadas a lo que te interesa.`,
@@ -38,7 +42,7 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
                     timestamp: new Date()
                 }
                 setMessages(prev => [...prev, botMessage])
-            }, 1000)
+            }, 2000) // delay de 2 segundos
 
             // Limpiamos el mensaje inicial para evitar bucles
             setInitialMessage('')
@@ -52,7 +56,7 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
 
     useEffect(() => {
         scrollToBottom()
-    }, [messages])
+    }, [messages, isTyping])
 
     const handleSendMessage = (e) => {
         e.preventDefault()
@@ -68,8 +72,11 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
             setMessages(prev => [...prev, userMessage])
             setInputValue('')
 
+            // nuevamente agregamos delay con animacion de "typing" ...
+            setIsTyping(true)
             // Mensaje para los casos de delay en respuesta
             setTimeout(() => {
+                setIsTyping(false)
                 const botMessage = {
                     id: Date.now() + 1,
                     text: "Estoy procesando tu petición. Por favor se paciente, estoy organizando una respuesta personalizada para lo que buscas.",
@@ -77,7 +84,7 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
                     timestamp: new Date()
                 }
                 setMessages(prev => [...prev, botMessage])
-            }, 1000)
+            }, 2000) // delay de 2 segundos
         }
     }
 
@@ -114,6 +121,17 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
                                 </div>
                             </div>
                         ))}
+                        {isTyping && (
+                            <div className='message bot-message'>
+                                <div className='message-bubble'>
+                                    <div className='message-text typing-indicator'>
+                                        <span className='dot'>.</span>
+                                        <span className='dot'>.</span>
+                                        <span className='dot'>.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <div ref={messagesEndRef} />
                     </div>
 
