@@ -181,10 +181,10 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
                         {isTyping && (
                             <div className='message bot-message'>
                                 <div className='message-bubble'>
-                                    <div className='message-text typing-indicator'>
-                                        <span className='dot'>.</span>
-                                        <span className='dot'>.</span>
-                                        <span className='dot'>.</span>
+                                    <div className='typing-indicator'>
+                                        <span className='dot'></span>
+                                        <span className='dot'></span>
+                                        <span className='dot'></span>
                                     </div>
                                 </div>
                             </div>
