@@ -58,14 +58,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 4px;
     min-height: 20px;
+    padding: 8px 0;
 }
 
 .dot {
-    font-size: 24px;
-    color: rgba(255, 255, 255, 0.7);
-    animation: typingAnimation 1.4s infinite ease-in-out;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    animation: typingAnimation 1.4s infinite ease-in-out both;
 }
 
 .dot:nth-child(1) {
