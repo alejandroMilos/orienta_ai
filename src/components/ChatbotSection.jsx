@@ -16,6 +16,44 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
     const [isTyping, setIsTyping] = useState(false)
     const messagesEndRef = useRef(null)
     const hasInitialMessage = useRef(false)
+    const sessionId = useRef(`session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`)
+
+    // URL del backend
+    const BACKEND_URL = 'http://localhost:3001/api'
+
+    // Funcion para llamar al backend
+    const callChatAPI = async (userMessage) => {
+        try {
+            const response = await fetch(`${BACKEND_URL}/chat`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: userMessage,
+                    sessionId: sessionId.current
+                })
+            })
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}))
+                throw new Error(errorData.error || `Error: ${response.status}`)
+            }
+                
+            const data = await response.json()
+            return data.response
+
+        } catch (error) {
+            console.error('Error calling chat API:', error)
+
+            // Mensaje de error contextual
+            if (error.message.includes('orientacion vocacional')) {
+                throw error // Mantener el mensaje personalizado del backend
+            }
+
+            throw new Error('Lo siento, ha ocurrido un error al procesar tu solicitud. Por favor, intenta de nuevo más tarde.')
+        }
+    }
 
     // Trasladamos el mensaje de pantalla 'menu' a pantalla 'chatbot'
     useEffect(() => {
@@ -31,25 +69,34 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
 
             setMessages(prev => [...prev, userMessage])
 
-            // agregamos delay con animación "typing" ...
+            // llamamos al backend para la respuesta
             setIsTyping(true)
-            setTimeout(() => {
-                setIsTyping(false)
-                const botMessage = {
-                    id: Date.now() + 1,
-                    text: `Recibí tu petición sobre "${initialMessage}". Exploremos juntos las opciones relacionadas a lo que te interesa.`,
-                    isUser: false,
-                    timestamp: new Date()
-                }
-                setMessages(prev => [...prev, botMessage])
-            }, 2000) // delay de 2 segundos
+            callChatAPI(initialMessage)
+                .then(aiResponse => {
+                    setIsTyping(false)
+                    const botMessage = {
+                        id: Date.now() + 1,
+                        text: aiResponse,
+                        isUser: false,
+                        timestamp: new Date()
+                    }
+                    setMessages(prev => [...prev, botMessage])
+                })
+                .catch(error => {
+                    setIsTyping(false)
+                    const errorMessage = {
+                        id: Date.now() + 1,
+                        text: error.message || "Estoy reorganizando mis recursos de orientación vocacional. Mientras tanto, ¿podrías contarme más sobre tus áreas de interés académico o profesional?",
+                        isUser: false,
+                        timestamp: new Date()
+                    }
+                    setMessages(prev => [...prev, errorMessage])
+                })
 
-            // Limpiamos el mensaje inicial para evitar bucles
             setInitialMessage('')
         }
     }, [initialMessage, setInitialMessage])
 
-    // Colocamos un scroll automatico al mensaje mas reciente
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     }
@@ -58,7 +105,7 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
         scrollToBottom()
     }, [messages, isTyping])
 
-    const handleSendMessage = (e) => {
+    const handleSendMessage = async (e) => {
         e.preventDefault()
         if (inputValue.trim()) {
             // Agregamos los mensajes del usuario
@@ -71,20 +118,30 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
 
             setMessages(prev => [...prev, userMessage])
             setInputValue('')
-
+            
+            // llamamos al backend para responder
             // nuevamente agregamos delay con animacion de "typing" ...
             setIsTyping(true)
-            // Mensaje para los casos de delay en respuesta
-            setTimeout(() => {
+            try {
+                const aiResponse = await callChatAPI(inputValue)
                 setIsTyping(false)
                 const botMessage = {
                     id: Date.now() + 1,
-                    text: "Estoy procesando tu petición. Por favor se paciente, estoy organizando una respuesta personalizada para lo que buscas.",
+                    text: aiResponse,
                     isUser: false,
                     timestamp: new Date()
                 }
                 setMessages(prev => [...prev, botMessage])
-            }, 2000) // delay de 2 segundos
+            } catch (error) {
+                setIsTyping(false)
+                const errorMessage = {
+                    id: Date.now() + 1,
+                    text: error.message || "Estoy teniendo dificultades para acceder a mis recursos de orientación. ¿Podrías reformular tu pregunta relacionada con tu desarrollo vocacional o profesional?",
+                    isUser: false,
+                    timestamp: new Date()
+                }
+                setMessages(prev => [...prev, errorMessage])
+            }
         }
     }
 
