@@ -169,6 +169,22 @@
     text-align: left;
 }
 
+.bot-message .message-text {
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.bot-message .message-text strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+.bot-message .message-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 .chat-input-container {
     display: flex;
     padding: 1.5rem;
