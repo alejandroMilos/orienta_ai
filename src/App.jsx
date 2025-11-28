@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import ChatbotSection from './components/ChatbotSection'
+import InfoSection from './components/InfoSection'
 import './App.css'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       
       {currentView === 'menu' && <Hero setCurrentView={handleViewChange} setInitialMessage={setInitialMessage} /> }
       {currentView === 'chatbot' && <ChatbotSection initialMessage={initialMessage} setInitialMessage={setInitialMessage} /> }
+      {currentView === 'info' && <InfoSection /> }
     </div>
   )
 }
