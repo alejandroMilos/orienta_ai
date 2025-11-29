@@ -77,29 +77,6 @@ const InfoSection = () => {
         }
     ]);
 
-    const [scienceFeatures] = useState([
-        {
-            id: 1,
-            title: "ANÁLISIS DEL USUARIO",
-            description: "Explicación acerca de cómo el agente evalúa las necesidades, intereses y habilidades del usuario según sus comentarios de búsqueda."
-        },
-        {
-            id: 2,
-            title: "PROCESAMIENTO INTELIGENTE",
-            description: "Explicación sobre cómo el agente utiliza algoritmos y entrenamiento con una base de datos para brindar información más precisa y clara al usuario."
-        },
-        {
-            id: 3,
-            title: "APRENDIZAJE CONSTANTE",
-            description: "El asistente aprende y refina sus sugerencias con cada sesión..."
-        },
-        {
-            id: 4,
-            title: "RESULTADOS PERSONALIZADOS",
-            description: "Explicación de cómo el agente brinda una respuesta personalizada a cada usuario según su búsqueda y sus respuestas a cada pregunta."
-        }
-    ]);
-
     const unamChartRef = useRef(null);
     const tecChartRef = useRef(null);
     const unamChartInstance = useRef(null);
@@ -285,17 +262,80 @@ const InfoSection = () => {
 
                     <div className="science-header">
                         <h2>La Ciencia Detrás de la</h2>
-                        <div className="science-features">
-                        {scienceFeatures.map((feature, index) => (
-                            <div key={feature.id} className={`science-feature ${index % 2 === 0 ? 'left' : 'right'}`}>
-                                <div className="feature-content">
-                                    <h3>{feature.title}</h3>
-                                    <p>{feature.description}</p>
+                            <div className="science-features-grid">
+                                <div className="science-feature">
+                                    <div className="feature-icon">
+                                        <img src="/idea.png" alt="Análisis del Usuario" 
+                                             onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                e.target.nextSibling.style.display = 'block';
+                                             }} />
+                                        <div className="feature-fallback" style={{display: 'none'}}>💡</div>
+                                    </div>
+                                    <h3>ANÁLISIS DEL USUARIO</h3>
+                                    <p>
+                                        Nuestro Asistente IA no solo recopila datos; analiza tus intereses, habilidades,
+                                        aptitudes y preferencias para construir un perfil vocacional tridimensional. Cruzamos
+                                        esta información con miles de planes de estudio y tendencias del mercado laboral para
+                                        asegurar que cada recomendación sea tan única como tú.
+                                    </p>
+                                </div>
+                                
+                                <div className="science-feature">
+                                    <div className="feature-icon">
+                                        <img src="/coding.png" alt="Procesamiento Inteligente" 
+                                             onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                e.target.nextSibling.style.display = 'block';
+                                             }} />
+                                        <div className="feature-fallback" style={{display: 'none'}}>💻</div>
+                                    </div>
+                                    <h3>PROCESAMIENTO INTELIGENTE</h3>
+                                    <p>
+                                        Utilizamos la tecnología de embeddings para convertir tu perfil y las opciones de carrera
+                                        en vectores de datos. Esto permite que el agente mida la similitud conceptual para encontrar
+                                        la opción más cercana y apropiada, logrando un matching que es profundo y altamente 
+                                        predictivo.
+                                    </p>
+                                </div>
+                                
+                                <div className="science-feature">
+                                    <div className="feature-icon">
+                                        <img src="/tools.png" alt="Resultados Personalizados"
+                                             onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                e.target.nextSibling.style.display = 'block';
+                                             }} />
+                                        <div className="feature-fallback" style={{display: 'none'}}>🛠️</div>
+                                    </div>
+                                    <h3>RESULTADOS PERSONALIZADOS</h3>
+                                    <p>
+                                        Los resultados no son sugerencias; son una guía altamente relevante generada a partir del
+                                        análisis de tus embeddings. Recibirás un Reporte de Afinidad con opciones de carrera 
+                                        priorizadas, planes de estudio y proyecciones laborales para que tomes una decisión vocacional
+                                        100% informada.
+                                    </p>
+                                </div>
+
+                                <div className="science-feature">
+                                    <div className="feature-icon">
+                                        <img src="/brain.png" alt="Aprendizaje Constante"
+                                             onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                e.target.nextSibling.style.display = 'block';
+                                             }} />
+                                        <div className="feature-fallback" style={{display: 'none'}}>🧠</div>
+                                    </div>
+                                    <h3>APRENDIZAJE CONSTANTE</h3>
+                                    <p>
+                                        Nuestro motor de IA se encuentra en un ciclo constante de mejora, actualizando la base de datos
+                                        con información de universidades y el mercado laboral global. Este aprendizaje continuo garantiza
+                                        que las recomendaciones que obtienes sean relevantes hoy y válidas en el futuro, adaptándose a la
+                                        evolución de las carreras.
+                                    </p>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                        <h2>Recomendación Perfecta</h2>
+                        <h2 className="recommendation-title">Recomendación Perfecta</h2>
                     </div>
                 </div>
             </section>
