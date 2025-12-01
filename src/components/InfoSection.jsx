@@ -211,7 +211,7 @@ const InfoSection = () => {
         <div className="info-section">
             <section className="main-hero">
                 <div className="container">
-                    <div className="hero-tag">ASISTENTE IA</div>
+                    <div className="hero-tag sliding">ASISTENTE IA</div>
                     <h1 className="hero-main-title">Descubre la Carrera<br /><span>Que Mejor se Ajusta Contigo</span></h1>
                     <div className="knowledge-section">
                         <h3>¿Sabías que...?</h3>
