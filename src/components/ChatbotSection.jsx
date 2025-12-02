@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { ChevronDown, Upload, X, Paperclip } from 'lucide-react'
+import MarkdownRenderer from './MarkdownRenderer'
 import './ChatbotSection.css'
 
 const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
@@ -271,7 +272,11 @@ const ChatbotSection = ({ initialMessage, setInitialMessage }) => {
                             >
                                 <div className="message-bubble">
                                     <div className="message-text">
-                                        {message.text}
+                                        {message.isUser || message.isSystem ? (
+                                            <span>{message.text}</span>
+                                        ) :  (
+                                            <MarkdownRenderer content={message.text} />
+                                        )}
                                     </div>
                                     <div className="message-time">
                                         {formatTime(message.timestamp)}

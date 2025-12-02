@@ -1,0 +1,78 @@
+.markdown-content {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: inherit;
+    width: 100%;
+}
+
+.markdown-paragraph {
+    margin-bottom: 1em;
+    font-size: 16px;
+    color: inherit;
+}
+
+.markdown-bold {
+    font-weight: 700;
+    color: inherit;
+}
+
+.markdown-italic {
+    font-style: italic;
+    color: inherit;
+}
+
+.markdown-h1, .markdown-h2, .markdown-h3 {
+    font-weight: 600;
+    margin: 1em 0 0.5em 0;
+    color: inherit;
+}
+
+.markdown-h1 {
+    font-size: 1.5em;
+}
+
+.markdown-h2 {
+    font-size: 1.3em;
+}
+
+.markdown-h3 {
+    font-size: 1.1em;
+}
+
+.markdown-list, .markdown-ordered-list {
+    margin-left: 1.5em;
+    margin-bottom: 1em;
+    padding-left: 0;
+}
+
+.markdown-list-item {
+    margin-bottom: 0.5em;
+    padding-left: 0.5em;
+}
+
+.markdown-blockquote {
+    border-left: 3px solid #e0e0e0;
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    background-color: rgba(0, 0, 0, 0.02);
+    font-style: italic;
+}
+
+.markdown-inline-code {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.markdown-code-block {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 1em 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
